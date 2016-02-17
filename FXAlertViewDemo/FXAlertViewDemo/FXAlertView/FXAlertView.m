@@ -63,19 +63,47 @@
 }
 
 - (void)setupAlertView {
-    
+    UIWindow *window = [self lastWindow];
+    self.maskView = [[UIView alloc] init];
+    self.maskView.frame = window.bounds;
+    self.maskView.alpha = 0.0f;
+    self.maskView.backgroundColor = [UIColor colorWithWhite:0.0f
+                                                      alpha:0.5f];
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(dismiss)];
+    [self.maskView addGestureRecognizer:tapGesture];
+    [window addSubview:self.maskView];
+    [self.maskView addSubview:self];
+}
+
+- (void)dismiss {
+    __weak typeof(self) weakSelf = self;
+    self.layer.transform = CATransform3DMakeScale(1, 1, 1);
+    [UIView animateWithDuration:0.3f animations:^{
+        self.layer.transform = CATransform3DMakeScale(0.01, 0.01, 1);
+        weakSelf.maskView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        if (!weakSelf.maskView.alpha) {
+            [weakSelf.maskView removeFromSuperview];
+        }
+    }];
 }
 
 #pragma mark - Public 
 
 - (void)show {
-    UIWindow *window = [self lastWindow];
-    self.maskView = [[UIView alloc] init];
-    self.maskView.frame = window.bounds;
-    self.maskView.backgroundColor = [UIColor colorWithWhite:0.0f
-                                                      alpha:0.5f];
-    [window addSubview:self.maskView];
-    [self.maskView addSubview:self];
+    __weak typeof(self) weakSelf = self;
+    CGFloat alpha = self.maskView.alpha ? 0.0f : 1.0f;
+    self.layer.transform = CATransform3DMakeScale(self.maskView.alpha, self.maskView.alpha, 1);
+    [UIView animateWithDuration:0.3f animations:^{
+        self.layer.transform = CATransform3DMakeScale(alpha, alpha, 1);
+        weakSelf.maskView.alpha = alpha;
+    } completion:^(BOOL finished) {
+        if (!weakSelf.maskView.alpha) {
+            [weakSelf.maskView removeFromSuperview];
+        }
+    }];
 }
 
 @end
