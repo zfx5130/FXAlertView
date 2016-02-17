@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D0D4527E151073206132489 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EBC575746D7B64053310885A /* libPods.a */; };
 		D72E1D9B1C489C4C0073C907 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D72E1D9A1C489C4C0073C907 /* main.m */; };
 		D72E1D9E1C489C4C0073C907 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D72E1D9D1C489C4C0073C907 /* AppDelegate.m */; };
 		D72E1DA11C489C4C0073C907 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72E1DA01C489C4C0073C907 /* ViewController.m */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		518FDA23A546246227D8BE83 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		D72E1D961C489C4C0073C907 /* FXAlertViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FXAlertViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D72E1D9A1C489C4C0073C907 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D72E1D9C1C489C4C0073C907 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -54,6 +56,8 @@
 		D72E1DC01C489C4D0073C907 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D72E1DCD1C489DD10073C907 /* FXAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXAlertView.h; sourceTree = "<group>"; };
 		D72E1DCE1C489DD10073C907 /* FXAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXAlertView.m; sourceTree = "<group>"; };
+		EBC575746D7B64053310885A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF69ADD798EDC7C0F7261F3C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D0D4527E151073206132489 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +86,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31F1CCE9AAEBAE74F7A95C58 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EF69ADD798EDC7C0F7261F3C /* Pods.debug.xcconfig */,
+				518FDA23A546246227D8BE83 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		425D35E34F5979A74E272C8C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EBC575746D7B64053310885A /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D72E1D8D1C489C4C0073C907 = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +110,8 @@
 				D72E1DB21C489C4C0073C907 /* FXAlertViewDemoTests */,
 				D72E1DBD1C489C4D0073C907 /* FXAlertViewDemoUITests */,
 				D72E1D971C489C4C0073C907 /* Products */,
+				31F1CCE9AAEBAE74F7A95C58 /* Pods */,
+				425D35E34F5979A74E272C8C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D72E1DC31C489C4D0073C907 /* Build configuration list for PBXNativeTarget "FXAlertViewDemo" */;
 			buildPhases = (
+				9B2F29A837B0D50B54A7C936 /* Check Pods Manifest.lock */,
 				D72E1D921C489C4C0073C907 /* Sources */,
 				D72E1D931C489C4C0073C907 /* Frameworks */,
 				D72E1D941C489C4C0073C907 /* Resources */,
+				3DE7F3680B4EBBFD9B49F8CB /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -277,6 +303,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3DE7F3680B4EBBFD9B49F8CB /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9B2F29A837B0D50B54A7C936 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D72E1D921C489C4C0073C907 /* Sources */ = {
@@ -425,6 +484,7 @@
 		};
 		D72E1DC41C489C4D0073C907 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EF69ADD798EDC7C0F7261F3C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FXAlertViewDemo/Info.plist;
@@ -436,6 +496,7 @@
 		};
 		D72E1DC51C489C4D0073C907 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 518FDA23A546246227D8BE83 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = FXAlertViewDemo/Info.plist;
@@ -512,6 +573,7 @@
 				D72E1DC51C489C4D0073C907 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D72E1DC61C489C4D0073C907 /* Build configuration list for PBXNativeTarget "FXAlertViewDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +582,7 @@
 				D72E1DC81C489C4D0073C907 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D72E1DC91C489C4D0073C907 /* Build configuration list for PBXNativeTarget "FXAlertViewDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +591,7 @@
 				D72E1DCB1C489C4D0073C907 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

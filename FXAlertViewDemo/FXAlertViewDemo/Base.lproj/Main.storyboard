@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tb5-ce-7VL">
-                                <rect key="frame" x="118" y="302" width="139" height="63"/>
+                                <rect key="frame" x="118" y="117" width="139" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="4L8-Cl-GYa"/>
                                     <constraint firstAttribute="width" constant="139" id="dY7-rj-L8m"/>
@@ -28,11 +28,24 @@
                                     <action selector="showButtonWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pxJ-kZ-2xN"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ixq-Rf-pBF">
+                                <rect key="frame" x="118" y="473" width="139" height="63"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="139" id="7kK-fV-Ry6"/>
+                                    <constraint firstAttribute="height" constant="63" id="DUo-Na-cY2"/>
+                                </constraints>
+                                <state key="normal" title="alert"/>
+                                <connections>
+                                    <action selector="alertButtonWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6cP-FV-t0g"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Ixq-Rf-pBF" firstAttribute="centerX" secondItem="Tb5-ce-7VL" secondAttribute="centerX" id="4IB-aH-06u"/>
                             <constraint firstItem="Tb5-ce-7VL" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ljz-MV-dsB"/>
-                            <constraint firstItem="Tb5-ce-7VL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="m48-qV-0hB"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ixq-Rf-pBF" secondAttribute="bottom" constant="131" id="gf0-ut-i6h"/>
+                            <constraint firstItem="Tb5-ce-7VL" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-185" id="m48-qV-0hB"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

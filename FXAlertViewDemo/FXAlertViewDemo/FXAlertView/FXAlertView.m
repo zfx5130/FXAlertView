@@ -21,12 +21,16 @@
 #import "FXAlertView.h"
 
 @interface FXAlertView ()
+<UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIView *maskView;
 
 @end
 
 @implementation FXAlertView
+@synthesize alertViewRadius = _alertViewRadius;
+@synthesize alertViewBackgroundColor = _alertViewBackgroundColor;
+@synthesize maskViewBackgroundColor = _maskViewBackgroundColor;
 
 #pragma mark - Lifecycle
 
@@ -46,6 +50,47 @@
     return self;
 }
 
+#pragma mark - Setters
+
+- (void)setAlertViewBackgroundColor:(UIColor *)alertViewBackgroundColor {
+    _alertViewBackgroundColor = alertViewBackgroundColor;
+    self.backgroundColor = alertViewBackgroundColor;
+}
+
+- (void)setAlertViewRadius:(CGFloat)alertViewRadius {
+    _alertViewRadius = alertViewRadius;
+    self.layer.cornerRadius = alertViewRadius;
+}
+
+- (void)setMaskViewBackgroundColor:(UIColor *)maskViewBackgroundColor {
+    _maskViewBackgroundColor = maskViewBackgroundColor;
+    self.maskView.backgroundColor = maskViewBackgroundColor;
+}
+
+#pragma mark - Getters
+
+- (UIColor *)alertViewBackgroundColor {
+    if (!_alertViewBackgroundColor) {
+        _alertViewBackgroundColor = [UIColor whiteColor];
+    }
+    return _alertViewBackgroundColor;
+}
+
+- (CGFloat)alertViewRadius {
+    if (!_alertViewRadius) {
+        _alertViewRadius = 0.0f;
+    }
+    return _alertViewRadius;
+}
+
+- (UIColor *)maskViewBackgroundColor {
+    if (!_maskViewBackgroundColor) {
+        _maskViewBackgroundColor = [UIColor colorWithWhite:0.0f
+                                                     alpha:0.4f];
+    }
+    return _maskViewBackgroundColor;
+}
+
 #pragma mark - Private 
 
 - (void)setupViews {
@@ -63,15 +108,18 @@
 }
 
 - (void)setupAlertView {
+    self.layer.cornerRadius = [self alertViewRadius];
+    self.clipsToBounds = YES;
+    self.backgroundColor = [self alertViewBackgroundColor];
     UIWindow *window = [self lastWindow];
     self.maskView = [[UIView alloc] init];
     self.maskView.frame = window.bounds;
     self.maskView.alpha = 0.0f;
-    self.maskView.backgroundColor = [UIColor colorWithWhite:0.0f
-                                                      alpha:0.5f];
+    self.maskView.backgroundColor = [self maskViewBackgroundColor];
     UITapGestureRecognizer *tapGesture =
     [[UITapGestureRecognizer alloc] initWithTarget:self
                                             action:@selector(dismiss)];
+    tapGesture.delegate = self;
     [self.maskView addGestureRecognizer:tapGesture];
     [window addSubview:self.maskView];
     [self.maskView addSubview:self];
@@ -104,6 +152,13 @@
             [weakSelf.maskView removeFromSuperview];
         }
     }];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+       shouldReceiveTouch:(UITouch *)touch {
+    return ![[touch view] isEqual:self];
 }
 
 @end
