@@ -26,13 +26,25 @@
 @property (strong, nonatomic) UIColor *maskViewBackgroundColor;
 
 /**
- *  alertView's containterView, default is the alertView size.
+ *  alertView's containterView, default is the alertView size.padding is 0.
  */
 @property (strong, nonatomic) UIView *containerView;
+
+/**
+ *  default the alert view is not set button , if you need button, if you use this way.
+ *
+ *  @param buttonTitle button title
+ *  @param titleColor  title color
+ *  @param titleFont   title font
+ */
+- (void)addActionWithButtonTitle:(NSString *)buttonTitle
+                      titleColor:(UIColor *)titleColor
+                       titleFont:(UIFont *)titleFont;
 
 /**
  *  alert show
  */
 - (void)show;
+
 
 @end

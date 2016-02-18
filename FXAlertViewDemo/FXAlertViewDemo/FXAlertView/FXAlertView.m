@@ -19,11 +19,16 @@
 #define DIGIT_MARGIN_BOTTOM 44.0f
 
 #import "FXAlertView.h"
+#import <Masonry.h>
+
+static const CGFloat kAlertViewHeight = 120.0f;
+static const CGFloat kAlertViewWidth = 266.0f;
 
 @interface FXAlertView ()
 <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIView *maskView;
+@property (assign, nonatomic) NSUInteger count;
 
 @end
 
@@ -65,6 +70,14 @@
 - (void)setMaskViewBackgroundColor:(UIColor *)maskViewBackgroundColor {
     _maskViewBackgroundColor = maskViewBackgroundColor;
     self.maskView.backgroundColor = maskViewBackgroundColor;
+}
+
+- (void)setContainerView:(UIView *)containerView {
+    _containerView = containerView;
+    [self addSubview:containerView];
+    [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self);
+    }];
 }
 
 #pragma mark - Getters
@@ -123,6 +136,8 @@
     [self.maskView addGestureRecognizer:tapGesture];
     [window addSubview:self.maskView];
     [self.maskView addSubview:self];
+    self.center = [UIApplication sharedApplication].keyWindow.center;
+    self.bounds = CGRectMake(0.0f, 0.0f, kAlertViewWidth, kAlertViewHeight);
 }
 
 - (void)dismiss {
@@ -152,6 +167,26 @@
             [weakSelf.maskView removeFromSuperview];
         }
     }];
+}
+
+- (void)addActionWithButtonTitle:(NSString *)buttonTitle
+                      titleColor:(UIColor *)titleColor
+                       titleFont:(UIFont *)titleFont {
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    [button setTitle:buttonTitle
+            forState:UIControlStateNormal];
+    [button setTitleColor:titleColor
+                 forState:UIControlStateNormal];
+    button.titleLabel.font = titleFont;
+    [self addSubview:button];
+    
+    //设置变量,更具变量次数,更改button frame.
+    /**
+     *  2.判断2宽度,是否大于1半,大于,frame,设置为一行, 小于,设置为半行,中间线显示
+     *  3.判断3宽度,是否小于全部frame设置成一行,y,自增.
+     *  4.如何改变原来button的frame,约束等? 创建数组,将button添加到数组? 添加tag值,更具tag,获取对应的button?
+     *  5.其他方式?
+     */
 }
 
 #pragma mark - UIGestureRecognizerDelegate
