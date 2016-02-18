@@ -48,15 +48,24 @@
 
     //alertRadius
     [alertView addActionWithButtonTitle:@"知道了"
-                             titleColor:[UIColor redColor]
+                             titleColor:[UIColor whiteColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
-                        backgroundImage:nil
-                        backgroundColor:[UIColor blueColor]
-                             buttonType:UIButtonTypeSystem];
+                        backgroundImage:[UIImage imageNamed:@"main"]
+                        backgroundColor:nil
+                             buttonType:UIButtonTypeCustom];
     
-    [alertView addActionWithButtonImage:[UIImage imageNamed:@"bing_image"]
+    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
                   buttonBackgroundImage:nil
                   buttonBackgroundColor:[UIColor whiteColor]
+                             buttomType:UIButtonTypeCustom];
+    
+    [alertView addActionWithButtonTitle:@"OK"
+                        titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
+                            buttonImage:[UIImage imageNamed:@"Fill 1"]
+                        imageEdgeInsets:UIEdgeInsetsZero
+                             titleColor:[UIColor blackColor]
+                              titleFont:[UIFont systemFontOfSize:18.0f]
+                        backgroundColor:[UIColor orangeColor]
                              buttomType:UIButtonTypeCustom];
     
     [alertView show];

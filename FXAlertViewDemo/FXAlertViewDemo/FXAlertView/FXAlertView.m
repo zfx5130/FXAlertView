@@ -221,6 +221,9 @@ static void *ClickButtonKey = @"ClickButtonKey";
     UIButton *button = [UIButton buttonWithType:buttonType];
     [button setTitle:buttonTitle
             forState:UIControlStateNormal];
+    if (!titleColor) {
+        titleColor = [UIColor blackColor];
+    }
     [button setTitleColor:titleColor
                  forState:UIControlStateNormal];
     [button setBackgroundImage:backgroundImage
@@ -229,8 +232,14 @@ static void *ClickButtonKey = @"ClickButtonKey";
             forState:UIControlStateNormal];
     [button setTitleEdgeInsets:titleEdgeInsets];
     [button setImageEdgeInsets:imageEdgeInsets];
+    if (!titleFont) {
+        titleFont = [UIFont systemFontOfSize:16.0f];
+    }
     button.titleLabel.font = titleFont;
     button.tag = kDefaultTagKey + self.count;
+    if (!backgroundColor) {
+        backgroundColor = [UIColor whiteColor];
+    }
     button.backgroundColor = backgroundColor;
     [button setBackgroundImage:backgroundImage
                       forState:UIControlStateNormal];
