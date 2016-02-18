@@ -23,12 +23,14 @@
 
 static const CGFloat kAlertViewHeight = 120.0f;
 static const CGFloat kAlertViewWidth = 266.0f;
+static const CGFloat kAlertButtonHeight = 40.0f;
 
 @interface FXAlertView ()
 <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIView *maskView;
 @property (assign, nonatomic) NSUInteger count;
+@property (strong, nonatomic) NSMutableArray *buttons;
 
 @end
 
@@ -36,6 +38,7 @@ static const CGFloat kAlertViewWidth = 266.0f;
 @synthesize alertViewRadius = _alertViewRadius;
 @synthesize alertViewBackgroundColor = _alertViewBackgroundColor;
 @synthesize maskViewBackgroundColor = _maskViewBackgroundColor;
+@synthesize containerView = _containerView;
 
 #pragma mark - Lifecycle
 
@@ -75,12 +78,26 @@ static const CGFloat kAlertViewWidth = 266.0f;
 - (void)setContainerView:(UIView *)containerView {
     _containerView = containerView;
     [self addSubview:containerView];
-    [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self);
+    CGFloat height =
+    containerView.frame.size.height > 0 ? containerView.frame.size.height : kAlertViewHeight;
+    CGFloat width =
+    containerView.frame.size.width > 0 ? containerView.frame.size.width : kAlertViewWidth;
+    __weak typeof(self) weakSelf = self;
+    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo([weakSelf lastWindow]);
+        make.width.mas_equalTo(width);
+        make.height.mas_equalTo(height);
     }];
 }
 
 #pragma mark - Getters
+
+- (NSMutableArray *)buttons {
+    if (!_buttons) {
+        _buttons = [[NSMutableArray alloc] init];
+    }
+    return _buttons;
+}
 
 - (UIColor *)alertViewBackgroundColor {
     if (!_alertViewBackgroundColor) {
@@ -104,6 +121,17 @@ static const CGFloat kAlertViewWidth = 266.0f;
     return _maskViewBackgroundColor;
 }
 
+- (UIView *)containerView {
+    if (!_containerView) {
+        _containerView = [[UIView alloc] init];
+        _containerView.frame = CGRectMake(0.0f,
+                                          0.0f,
+                                          kAlertViewWidth,
+                                          kAlertViewHeight);
+    }
+    return _containerView;
+}
+
 #pragma mark - Private 
 
 - (void)setupViews {
@@ -121,12 +149,12 @@ static const CGFloat kAlertViewWidth = 266.0f;
 }
 
 - (void)setupAlertView {
+    
     self.layer.cornerRadius = [self alertViewRadius];
     self.clipsToBounds = YES;
     self.backgroundColor = [self alertViewBackgroundColor];
     UIWindow *window = [self lastWindow];
     self.maskView = [[UIView alloc] init];
-    self.maskView.frame = window.bounds;
     self.maskView.alpha = 0.0f;
     self.maskView.backgroundColor = [self maskViewBackgroundColor];
     UITapGestureRecognizer *tapGesture =
@@ -135,9 +163,17 @@ static const CGFloat kAlertViewWidth = 266.0f;
     tapGesture.delegate = self;
     [self.maskView addGestureRecognizer:tapGesture];
     [window addSubview:self.maskView];
+    [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(window);
+    }];
     [self.maskView addSubview:self];
-    self.center = [UIApplication sharedApplication].keyWindow.center;
-    self.bounds = CGRectMake(0.0f, 0.0f, kAlertViewWidth, kAlertViewHeight);
+    
+    __weak typeof(self) weakSelf = self;
+    [self mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo([weakSelf lastWindow]);
+        make.width.mas_equalTo(kAlertViewWidth);
+        make.height.mas_equalTo(kAlertViewHeight);
+    }];
 }
 
 - (void)dismiss {
@@ -178,7 +214,29 @@ static const CGFloat kAlertViewWidth = 266.0f;
     [button setTitleColor:titleColor
                  forState:UIControlStateNormal];
     button.titleLabel.font = titleFont;
+    button.backgroundColor = [UIColor greenColor];
     [self addSubview:button];
+    CGFloat width =
+    self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
+    CGFloat height =
+    self.containerView.frame.size.height > 0 ? self.containerView.frame.size.height : kAlertViewHeight;
+    
+    __weak typeof(self) weakSelf = self;
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(kAlertButtonHeight);
+        make.bottom.mas_equalTo(@0);
+        make.width.mas_equalTo(width);
+        make.centerX.mas_equalTo(weakSelf.mas_centerX);
+    }];
+    
+    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo([weakSelf lastWindow]);
+        make.width.mas_equalTo(width);
+        make.height.mas_equalTo(height + kAlertButtonHeight);
+    }];
+    
+//    [self.buttons addObject:button];
+//    self.count++;
     
     //设置变量,更具变量次数,更改button frame.
     /**
@@ -187,6 +245,7 @@ static const CGFloat kAlertViewWidth = 266.0f;
      *  4.如何改变原来button的frame,约束等? 创建数组,将button添加到数组? 添加tag值,更具tag,获取对应的button?
      *  5.其他方式?
      */
+    
 }
 
 #pragma mark - UIGestureRecognizerDelegate

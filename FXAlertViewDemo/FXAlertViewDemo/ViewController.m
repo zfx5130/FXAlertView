@@ -31,17 +31,22 @@
 }
 
 - (void)setupViews {
-    FXAlertView *alertView = [[FXAlertView alloc] init];
     
+    FXAlertView *alertView = [[FXAlertView alloc] init];
+    alertView.alertViewBackgroundColor = [UIColor purpleColor];
+    alertView.alertViewRadius = 15.0f;
+
     //containerView
-    UIView *containerView = [[UIView alloc] init];
-    containerView.backgroundColor = [UIColor redColor];
-    alertView.containerView = containerView;
+//    UIView *containerView = [[UIView alloc] init];
+//    containerView.frame = CGRectMake(0.0f, 0.0f, 300, 300);
+//    containerView.backgroundColor = [UIColor redColor];
+//    alertView.containerView = containerView;
 
     //alertRadius
-    alertView.alertViewRadius = 15.0f;
+    [alertView addActionWithButtonTitle:@"知道了"
+                             titleColor:[UIColor redColor]
+                              titleFont:[UIFont systemFontOfSize:16.0f]];
     [alertView show];
-    
 }
 
 - (IBAction)showButtonWasPressed:(UIButton *)sender {
@@ -63,13 +68,6 @@
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               NSLog(@"dooooooooooooook");
     }];
-//    UIAlertAction *otherAlertAction = [UIAlertAction actionWithTitle:@"other"
-//                                                            style:UIAlertActionStyleDestructive
-//                                                          handler:^(UIAlertAction * _Nonnull action) {
-//                                                              NSLog(@"dooooooooooooook");
-//                                                          }];
-//    [alertController addAction:otherAlertAction];
-    NSLog(@"::::::%@",NSStringFromCGRect(alertController.view.frame));
     [alertController addAction:cancleAlertAction];
     [alertController addAction:okAlertAction];
      [self presentViewController:alertController

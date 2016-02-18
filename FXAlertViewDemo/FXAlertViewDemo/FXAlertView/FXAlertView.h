@@ -26,7 +26,7 @@
 @property (strong, nonatomic) UIColor *maskViewBackgroundColor;
 
 /**
- *  alertView's containterView, default is the alertView size.padding is 0.
+ *  alertView's containterView, default is the containerView size.with 266.0f, height 120.0f.
  */
 @property (strong, nonatomic) UIView *containerView;
 
