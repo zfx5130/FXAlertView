@@ -288,7 +288,6 @@ static void *ClickButtonKey = @"ClickButtonKey";
     
     __weak typeof(self) weakSelf = self;
     if (self.count == 2) {
-        NSLog(@"::::1个button2222");
         CGSize size = [self sizeForFont:titleFont
                                    text:buttonTitle];
         if (size.width > width * 0.5f) {
@@ -313,6 +312,7 @@ static void *ClickButtonKey = @"ClickButtonKey";
         }];
     } else if (self.count == 3) {
         NSLog(@":::::;两个button");
+        
     } else if (self.count > 3) {
         NSLog(@"::::::::两个以上button");
     }
