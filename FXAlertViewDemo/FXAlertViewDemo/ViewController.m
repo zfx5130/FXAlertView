@@ -42,12 +42,12 @@
 
     //containerView
 //    UIView *containerView = [[UIView alloc] init];
-//    containerView.frame = CGRectMake(0.0f, 0.0f, 300, 300);
+//    containerView.frame = CGRectMake(0.0f, 0.0f, 300, 200);
 //    containerView.backgroundColor = [UIColor redColor];
 //    alertView.containerView = containerView;
 
     //alertRadius
-    [alertView addActionWithButtonTitle:@"知道了"
+    [alertView addActionWithButtonTitle:@"知道了hehehehee"
                              titleColor:[UIColor whiteColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundImage:[UIImage imageNamed:@"main"]
@@ -59,7 +59,7 @@
                   buttonBackgroundColor:[UIColor whiteColor]
                              buttomType:UIButtonTypeCustom];
     
-    [alertView addActionWithButtonTitle:@"OK"
+    [alertView addActionWithButtonTitle:@"OK--------++++++"
                         titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
                             buttonImage:[UIImage imageNamed:@"Fill 1"]
                         imageEdgeInsets:UIEdgeInsetsZero
@@ -67,8 +67,8 @@
                               titleFont:[UIFont systemFontOfSize:18.0f]
                         backgroundColor:[UIColor orangeColor]
                              buttomType:UIButtonTypeCustom];
-    
     [alertView show];
+    
 }
 
 #pragma mark - Handlers

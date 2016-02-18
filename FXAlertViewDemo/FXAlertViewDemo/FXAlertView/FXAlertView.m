@@ -27,6 +27,7 @@ static const CGFloat kAlertViewHeight = 120.0f;
 static const CGFloat kAlertViewWidth = 266.0f;
 static const CGFloat kAlertButtonHeight = 40.0f;
 static const NSUInteger kDefaultTagKey = 200;
+static const CGFloat kContainerViewTag = 1000;
 static void *ClickButtonKey = @"ClickButtonKey";
 
 @interface FXAlertView ()
@@ -86,6 +87,7 @@ static void *ClickButtonKey = @"ClickButtonKey";
     containerView.frame.size.height > 0 ? containerView.frame.size.height : kAlertViewHeight;
     CGFloat width =
     containerView.frame.size.width > 0 ? containerView.frame.size.width : kAlertViewWidth;
+    containerView.tag = kContainerViewTag;
     __weak typeof(self) weakSelf = self;
     [self mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo([weakSelf lastWindow]);
@@ -136,7 +138,15 @@ static void *ClickButtonKey = @"ClickButtonKey";
     return _containerView;
 }
 
-#pragma mark - Private 
+#pragma mark - Private
+
+- (CGSize)sizeForFont:(UIFont *)font
+                 text:(NSString *)text {
+    CGSize size = [text sizeWithAttributes:@{NSFontAttributeName : font}];
+    CGSize adjustedSize = CGSizeMake(ceilf(size.width),
+                                     ceilf(size.height));
+    return adjustedSize;
+}
 
 - (void)setupViews {
     [self setupAlertView];
@@ -265,23 +275,9 @@ static void *ClickButtonKey = @"ClickButtonKey";
                              clickBlock,
                              OBJC_ASSOCIATION_COPY_NONATOMIC);
     
-    __weak typeof(self) weakSelf = self;
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.height.mas_equalTo(kAlertButtonHeight);
-        make.top.mas_equalTo(height + (self.count - 1) * kAlertButtonHeight);
-        make.width.mas_equalTo(width);
-        make.centerX.mas_equalTo(weakSelf.mas_centerX);
-    }];
-    
-    [self mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo([weakSelf lastWindow]);
-        make.width.mas_equalTo(width);
-        make.height.mas_equalTo(height + kAlertButtonHeight * self.count);
-    }];
-    
     [self.buttons addObject:button];
     self.count++;
-    
+
     //设置变量,更具变量次数,更改button frame.
     /**
      *  2.判断2宽度,是否大于1半,大于,frame,设置为一行, 小于,设置为半行,中间线显示
@@ -289,6 +285,39 @@ static void *ClickButtonKey = @"ClickButtonKey";
      *  4.如何改变原来button的frame,约束等? 创建数组,将button添加到数组? 添加tag值,更具tag,获取对应的button?
      *  5.其他方式?
      */
+    
+    __weak typeof(self) weakSelf = self;
+    if (self.count == 2) {
+        NSLog(@"::::1个button2222");
+        CGSize size = [self sizeForFont:titleFont
+                                   text:buttonTitle];
+        if (size.width > width * 0.5f) {
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(kAlertButtonHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.width.mas_equalTo(width);
+                make.centerX.mas_equalTo(weakSelf.mas_centerX);
+            }];
+        } else {
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(kAlertButtonHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.width.mas_equalTo(width * 0.5f);
+                make.left.mas_equalTo(weakSelf.mas_left);
+            }];
+        }
+        [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo([weakSelf lastWindow]);
+            make.width.mas_equalTo(width);
+            make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+        }];
+    } else if (self.count == 3) {
+        NSLog(@":::::;两个button");
+    } else if (self.count > 3) {
+        NSLog(@"::::::::两个以上button");
+    }
+    
+    
 }
 
 #pragma mark - Public
@@ -353,6 +382,9 @@ static void *ClickButtonKey = @"ClickButtonKey";
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
        shouldReceiveTouch:(UITouch *)touch {
+    if (touch.view.tag == kContainerViewTag) {
+        return NO;
+    }
     return ![[touch view] isEqual:self];
 }
 
