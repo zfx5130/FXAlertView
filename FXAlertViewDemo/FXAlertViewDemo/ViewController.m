@@ -11,6 +11,7 @@
 #import "FXAlertView.h"
 
 @interface ViewController ()
+<FXAlertViewDelegate>
 
 @end
 
@@ -30,11 +31,14 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark - Pirvaite
+
 - (void)setupViews {
     
     FXAlertView *alertView = [[FXAlertView alloc] init];
     alertView.alertViewBackgroundColor = [UIColor purpleColor];
     alertView.alertViewRadius = 15.0f;
+    alertView.delegate = self;
 
     //containerView
 //    UIView *containerView = [[UIView alloc] init];
@@ -45,9 +49,20 @@
     //alertRadius
     [alertView addActionWithButtonTitle:@"知道了"
                              titleColor:[UIColor redColor]
-                              titleFont:[UIFont systemFontOfSize:16.0f]];
+                              titleFont:[UIFont systemFontOfSize:16.0f]
+                        backgroundImage:nil
+                        backgroundColor:[UIColor blueColor]
+                             buttonType:UIButtonTypeSystem];
+    
+    [alertView addActionWithButtonImage:[UIImage imageNamed:@"bing_image"]
+                  buttonBackgroundImage:nil
+                  buttonBackgroundColor:[UIColor whiteColor]
+                             buttomType:UIButtonTypeCustom];
+    
     [alertView show];
 }
+
+#pragma mark - Handlers
 
 - (IBAction)showButtonWasPressed:(UIButton *)sender {
     [self setupViews];
@@ -73,6 +88,13 @@
      [self presentViewController:alertController
                         animated:YES
                       completion:nil];
+}
+
+#pragma mark - FXAlertViewDelegate
+
+- (void)alertView:(FXAlertView *)alertView
+clickedButtonAtIndex:(NSInteger)buttonIndex {
+    NSLog(@"buttonIndex:::%@", @(buttonIndex));
 }
 
 @end

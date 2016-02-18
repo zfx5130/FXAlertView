@@ -19,11 +19,15 @@
 #define DIGIT_MARGIN_BOTTOM 44.0f
 
 #import "FXAlertView.h"
+
 #import <Masonry.h>
+#import <objc/runtime.h>
 
 static const CGFloat kAlertViewHeight = 120.0f;
 static const CGFloat kAlertViewWidth = 266.0f;
 static const CGFloat kAlertButtonHeight = 40.0f;
+static const NSUInteger kDefaultTagKey = 200;
+static void *ClickButtonKey = @"ClickButtonKey";
 
 @interface FXAlertView ()
 <UIGestureRecognizerDelegate>
@@ -156,6 +160,7 @@ static const CGFloat kAlertButtonHeight = 40.0f;
     UIWindow *window = [self lastWindow];
     self.maskView = [[UIView alloc] init];
     self.maskView.alpha = 0.0f;
+    self.count = 1;
     self.maskView.backgroundColor = [self maskViewBackgroundColor];
     UITapGestureRecognizer *tapGesture =
     [[UITapGestureRecognizer alloc] initWithTarget:self
@@ -189,9 +194,7 @@ static const CGFloat kAlertButtonHeight = 40.0f;
     }];
 }
 
-#pragma mark - Public 
-
-- (void)show {
+- (void)toggleAlertView {
     __weak typeof(self) weakSelf = self;
     CGFloat alpha = self.maskView.alpha ? 0.0f : 1.0f;
     self.layer.transform = CATransform3DMakeScale(self.maskView.alpha, self.maskView.alpha, 1);
@@ -206,25 +209,57 @@ static const CGFloat kAlertButtonHeight = 40.0f;
 }
 
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
+                 titleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
+                     buttonImage:(UIImage *)buttonImage
+                 imageEdgeInsets:(UIEdgeInsets)imageEdgeInsets
                       titleColor:(UIColor *)titleColor
-                       titleFont:(UIFont *)titleFont {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+                       titleFont:(UIFont *)titleFont
+                 backgroundImage:(UIImage *)backgroundImage
+                 backgroundColor:(UIColor *)backgroundColor
+                      buttonType:(UIButtonType)buttonType {
+    
+    UIButton *button = [UIButton buttonWithType:buttonType];
     [button setTitle:buttonTitle
             forState:UIControlStateNormal];
     [button setTitleColor:titleColor
                  forState:UIControlStateNormal];
+    [button setBackgroundImage:backgroundImage
+                      forState:UIControlStateNormal];
+    [button setImage:buttonImage
+            forState:UIControlStateNormal];
+    [button setTitleEdgeInsets:titleEdgeInsets];
+    [button setImageEdgeInsets:imageEdgeInsets];
     button.titleLabel.font = titleFont;
-    button.backgroundColor = [UIColor greenColor];
+    button.tag = kDefaultTagKey + self.count;
+    button.backgroundColor = backgroundColor;
+    [button setBackgroundImage:backgroundImage
+                      forState:UIControlStateNormal];
+    
     [self addSubview:button];
     CGFloat width =
     self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
     CGFloat height =
     self.containerView.frame.size.height > 0 ? self.containerView.frame.size.height : kAlertViewHeight;
+    [button addTarget:self
+               action:@selector(buttonClick:)
+     forControlEvents:UIControlEventTouchUpInside];
+    
+    void(^clickBlock)(NSInteger) = ^(NSInteger tag) {
+        [self toggleAlertView];
+        if ([self.delegate respondsToSelector:@selector(alertView:clickedButtonAtIndex:)]) {
+            [self.delegate alertView:self
+                clickedButtonAtIndex:tag - kDefaultTagKey];
+        }
+    };
+    objc_setAssociatedObject(button,
+                             ClickButtonKey,
+                             clickBlock,
+                             OBJC_ASSOCIATION_COPY_NONATOMIC);
     
     __weak typeof(self) weakSelf = self;
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.height.mas_equalTo(kAlertButtonHeight);
-        make.bottom.mas_equalTo(@0);
+        make.top.mas_equalTo(height + (self.count - 1) * kAlertButtonHeight);
         make.width.mas_equalTo(width);
         make.centerX.mas_equalTo(weakSelf.mas_centerX);
     }];
@@ -232,11 +267,11 @@ static const CGFloat kAlertButtonHeight = 40.0f;
     [self mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo([weakSelf lastWindow]);
         make.width.mas_equalTo(width);
-        make.height.mas_equalTo(height + kAlertButtonHeight);
+        make.height.mas_equalTo(height + kAlertButtonHeight * self.count);
     }];
     
-//    [self.buttons addObject:button];
-//    self.count++;
+    [self.buttons addObject:button];
+    self.count++;
     
     //设置变量,更具变量次数,更改button frame.
     /**
@@ -245,7 +280,64 @@ static const CGFloat kAlertButtonHeight = 40.0f;
      *  4.如何改变原来button的frame,约束等? 创建数组,将button添加到数组? 添加tag值,更具tag,获取对应的button?
      *  5.其他方式?
      */
+}
+
+#pragma mark - Public
+
+- (void)show {
+    [self toggleAlertView];
+}
+
+- (void)addActionWithButtonImage:(UIImage *)buttonImage
+           buttonBackgroundImage:(UIImage *)buttonBackgroundImage
+           buttonBackgroundColor:(UIColor *)backgroundColor
+                      buttomType:(UIButtonType)buttonType {
+    [self addActionWithButtonTitle:nil
+                   titleEdgeInsets:UIEdgeInsetsZero
+                       buttonImage:buttonImage
+                   imageEdgeInsets:UIEdgeInsetsZero
+                        titleColor:nil
+                         titleFont:nil
+                   backgroundImage:buttonBackgroundImage
+                   backgroundColor:backgroundColor
+                        buttonType:buttonType];
     
+}
+
+- (void)addActionWithButtonTitle:(NSString *)buttonTitle
+                 titleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
+                     buttonImage:(UIImage *)buttonImage
+                 imageEdgeInsets:(UIEdgeInsets)imageEdgeInsets
+                      titleColor:(UIColor *)titleColor
+                       titleFont:(UIFont *)titleFont
+                 backgroundColor:(UIColor *)backgroundColor
+                      buttomType:(UIButtonType)buttonType {
+    [self addActionWithButtonTitle:buttonTitle
+                   titleEdgeInsets:titleEdgeInsets
+                       buttonImage:buttonImage
+                   imageEdgeInsets:imageEdgeInsets
+                        titleColor:titleColor
+                         titleFont:titleFont
+                   backgroundImage:nil
+                   backgroundColor:backgroundColor
+                        buttonType:buttonType];
+}
+
+- (void)addActionWithButtonTitle:(NSString *)buttonTitle
+                      titleColor:(UIColor *)titleColor
+                       titleFont:(UIFont *)titleFont
+                 backgroundImage:(UIImage *)backgroundImage
+                 backgroundColor:(UIColor *)backgroundColor
+                      buttonType:(UIButtonType)buttonType {
+    [self addActionWithButtonTitle:buttonTitle
+                   titleEdgeInsets:UIEdgeInsetsZero
+                       buttonImage:nil
+                   imageEdgeInsets:UIEdgeInsetsZero
+                        titleColor:titleColor
+                         titleFont:titleFont
+                   backgroundImage:backgroundImage
+                   backgroundColor:backgroundColor
+                        buttonType:buttonType];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -253,6 +345,16 @@ static const CGFloat kAlertButtonHeight = 40.0f;
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
        shouldReceiveTouch:(UITouch *)touch {
     return ![[touch view] isEqual:self];
+}
+
+#pragma mark - Handlers
+
+- (void)buttonClick:(UIButton *)button {
+    void(^clickBlock)(NSInteger) = objc_getAssociatedObject(button,
+                                                            ClickButtonKey);
+    if (clickBlock) {
+        clickBlock(button.tag);
+    }
 }
 
 @end
