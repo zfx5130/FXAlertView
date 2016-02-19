@@ -47,19 +47,14 @@
 //    alertView.containerView = containerView;
 
     //alertRadius
-    [alertView addActionWithButtonTitle:@"知道了hehehehee"
+    [alertView addActionWithButtonTitle:@"知道了hehehe"
                              titleColor:[UIColor whiteColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundImage:[UIImage imageNamed:@"main"]
                         backgroundColor:nil
                              buttonType:UIButtonTypeCustom];
     
-    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
-                  buttonBackgroundImage:nil
-                  buttonBackgroundColor:[UIColor whiteColor]
-                             buttomType:UIButtonTypeCustom];
-    
-    [alertView addActionWithButtonTitle:@"OK--------++++++"
+    [alertView addActionWithButtonTitle:@"OK+++Hello"
                         titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
                             buttonImage:[UIImage imageNamed:@"Fill 1"]
                         imageEdgeInsets:UIEdgeInsetsZero
@@ -67,6 +62,12 @@
                               titleFont:[UIFont systemFontOfSize:18.0f]
                         backgroundColor:[UIColor orangeColor]
                              buttomType:UIButtonTypeCustom];
+    
+    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
+                  buttonBackgroundImage:nil
+                  buttonBackgroundColor:[UIColor whiteColor]
+                             buttomType:UIButtonTypeCustom];
+    
     [alertView show];
     
 }
@@ -87,7 +88,7 @@
                                                         handler:^(UIAlertAction * _Nonnull action) {
                                                             NSLog(@"取消操作");
     }];
-    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:@"OKadaskkkssd"
+    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:@"OKad"
                                                             style:UIAlertActionStyleDestructive
                                                           handler:^(UIAlertAction * _Nonnull action) {
                                                               NSLog(@"dooooooooooooook");

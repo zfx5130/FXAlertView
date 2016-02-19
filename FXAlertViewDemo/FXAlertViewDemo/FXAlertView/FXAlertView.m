@@ -36,6 +36,7 @@ static void *ClickButtonKey = @"ClickButtonKey";
 @property (strong, nonatomic) UIView *maskView;
 @property (assign, nonatomic) NSUInteger count;
 @property (strong, nonatomic) NSMutableArray *buttons;
+@property (assign, nonatomic) BOOL isHalfWidth;
 
 @end
 
@@ -277,14 +278,6 @@ static void *ClickButtonKey = @"ClickButtonKey";
     
     [self.buttons addObject:button];
     self.count++;
-
-    //设置变量,更具变量次数,更改button frame.
-    /**
-     *  2.判断2宽度,是否大于1半,大于,frame,设置为一行, 小于,设置为半行,中间线显示
-     *  3.判断3宽度,是否小于全部frame设置成一行,y,自增.
-     *  4.如何改变原来button的frame,约束等? 创建数组,将button添加到数组? 添加tag值,更具tag,获取对应的button?
-     *  5.其他方式?
-     */
     
     __weak typeof(self) weakSelf = self;
     if (self.count == 2) {
@@ -297,6 +290,7 @@ static void *ClickButtonKey = @"ClickButtonKey";
                 make.width.mas_equalTo(width);
                 make.centerX.mas_equalTo(weakSelf.mas_centerX);
             }];
+            self.isHalfWidth = NO;
         } else {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.height.mas_equalTo(kAlertButtonHeight);
@@ -304,6 +298,7 @@ static void *ClickButtonKey = @"ClickButtonKey";
                 make.width.mas_equalTo(width * 0.5f);
                 make.left.mas_equalTo(weakSelf.mas_left);
             }];
+            self.isHalfWidth = YES;
         }
         [self mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo([weakSelf lastWindow]);
@@ -311,10 +306,71 @@ static void *ClickButtonKey = @"ClickButtonKey";
             make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
         }];
     } else if (self.count == 3) {
-        NSLog(@":::::;两个button");
-        
+        if (!self.isHalfWidth) {
+            [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(kAlertButtonHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.width.mas_equalTo(width);
+                make.centerX.mas_equalTo(weakSelf.mas_centerX);
+            }];
+            [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+                make.center.equalTo([weakSelf lastWindow]);
+                make.width.mas_equalTo(width);
+                make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+            }];
+        } else if (self.isHalfWidth) {
+            CGSize size = [self sizeForFont:titleFont
+                                       text:buttonTitle];
+            if (size.width > width * 0.5f) {
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.height.mas_equalTo(kAlertButtonHeight);
+                    make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                    make.width.mas_equalTo(width);
+                    make.centerX.mas_equalTo(weakSelf.mas_centerX);
+                }];
+                [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.center.equalTo([weakSelf lastWindow]);
+                    make.width.mas_equalTo(width);
+                    make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+                }];
+                if ([self.buttons count] >= 2) {
+                    UIButton *button = [self.buttons firstObject];
+                    [button mas_remakeConstraints:^(MASConstraintMaker *make) {
+                        make.height.mas_equalTo(kAlertButtonHeight);
+                        make.top.mas_equalTo(height + (self.count - 3) * kAlertButtonHeight);
+                        make.width.mas_equalTo(width);
+                        make.centerX.mas_equalTo(weakSelf.mas_centerX);
+                    }];
+                }
+            } else {
+                [button mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.height.mas_equalTo(kAlertButtonHeight);
+                    make.top.mas_equalTo(height + (self.count - 3) * kAlertButtonHeight);
+                    make.width.mas_equalTo(width * 0.5f);
+                    make.left.mas_equalTo(width * 0.5f);
+                }];
+            }
+ 
+        }
     } else if (self.count > 3) {
-        NSLog(@"::::::::两个以上button");
+        if ([self.buttons count]) {
+            for (int i = 0; i < [self.buttons count]; i++) {
+                UIButton *anyButton = self.buttons[i];
+                [anyButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.height.mas_equalTo(kAlertButtonHeight);
+                    make.top.mas_equalTo(height + i * kAlertButtonHeight);
+                    make.width.mas_equalTo(width);
+                    make.centerX.mas_equalTo(weakSelf.mas_centerX);
+                }];
+                [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+                    make.center.equalTo([weakSelf lastWindow]);
+                    make.width.mas_equalTo(width);
+                    make.height.mas_equalTo(height + kAlertButtonHeight * (i + 1));
+                }];
+            }
+        
+        }
+        
     }
     
     
