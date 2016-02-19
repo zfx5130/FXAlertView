@@ -39,6 +39,21 @@
 @property (strong, nonatomic) UIView *containerView;
 
 /**
+ *  alertView's centerline, default is RGBColor(211.0f, 210.0f, 216.0f),you can change it with image.
+ */
+@property (strong, nonatomic) UIImage *centerLineImage;
+
+/**
+ *  alertView's centerline, default is RGBColor(211.0f, 210.0f, 216.0f), you can change it with color.
+ */
+@property (strong, nonatomic) UIColor *centerLineBackgroundColor;
+
+/**
+ *  hidden center line, default is yes.
+ */
+@property (assign, nonatomic) BOOL isHiddenCenterLine;
+
+/**
  *  delegate
  */
 @property (weak, nonatomic) id <FXAlertViewDelegate> delegate;

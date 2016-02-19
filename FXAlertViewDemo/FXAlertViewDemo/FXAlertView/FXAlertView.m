@@ -29,6 +29,7 @@ static const CGFloat kAlertButtonHeight = 40.0f;
 static const NSUInteger kDefaultTagKey = 200;
 static const CGFloat kContainerViewTag = 1000;
 static void *ClickButtonKey = @"ClickButtonKey";
+static const CGFloat kCenterLineImageViewWidth = 0.5f;
 
 @interface FXAlertView ()
 <UIGestureRecognizerDelegate>
@@ -37,6 +38,8 @@ static void *ClickButtonKey = @"ClickButtonKey";
 @property (assign, nonatomic) NSUInteger count;
 @property (strong, nonatomic) NSMutableArray *buttons;
 @property (assign, nonatomic) BOOL isHalfWidth;
+@property (assign, nonatomic) BOOL isHalfFontWidth;
+@property (strong, nonatomic) UIImageView *centerLineImageView;
 
 @end
 
@@ -97,6 +100,21 @@ static void *ClickButtonKey = @"ClickButtonKey";
     }];
 }
 
+- (void)setCenterLineImage:(UIImage *)centerLineImage {
+    _centerLineImage = centerLineImage;
+    self.centerLineImageView.image = centerLineImage;
+}
+
+- (void)setIsHiddenCenterLine:(BOOL)isHiddenCenterLine {
+    _isHiddenCenterLine = isHiddenCenterLine;
+    self.centerLineImageView.hidden = isHiddenCenterLine;
+}
+
+- (void)setCenterLineBackgroundColor:(UIColor *)centerLineBackgroundColor {
+    _centerLineBackgroundColor = centerLineBackgroundColor;
+    self.centerLineImageView.backgroundColor = centerLineBackgroundColor;
+}
+
 #pragma mark - Getters
 
 - (NSMutableArray *)buttons {
@@ -128,6 +146,16 @@ static void *ClickButtonKey = @"ClickButtonKey";
     return _maskViewBackgroundColor;
 }
 
+- (UIImageView *)centerLineImageView {
+    if (!_centerLineImageView) {
+        _centerLineImageView = [[UIImageView alloc] init];
+        _centerLineImageView.backgroundColor = RGBColor(211.0f, 210.0f, 216.0f);
+        _centerLineImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _centerLineImageView.hidden = YES;
+    }
+    return _centerLineImageView;
+}
+
 - (UIView *)containerView {
     if (!_containerView) {
         _containerView = [[UIView alloc] init];
@@ -140,6 +168,20 @@ static void *ClickButtonKey = @"ClickButtonKey";
 }
 
 #pragma mark - Private
+
+- (void)addTopLineWithColor:(UIColor *)color
+                      width:(CGFloat)width
+                 withButton:(UIButton *)button {
+    CGSize viewSize = self.frame.size;
+    UIView *line = [[UIView alloc] init];
+    CGRect lineRect = CGRectMake(0, 0, viewSize.width, width);
+    UIViewAutoresizing  autoresizing =
+    UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth;
+    line.frame = lineRect;
+    line.autoresizingMask = autoresizing;
+    line.backgroundColor = color;
+    [button addSubview:line];
+}
 
 - (CGSize)sizeForFont:(UIFont *)font
                  text:(NSString *)text {
@@ -189,6 +231,14 @@ static void *ClickButtonKey = @"ClickButtonKey";
         make.center.equalTo([weakSelf lastWindow]);
         make.width.mas_equalTo(kAlertViewWidth);
         make.height.mas_equalTo(kAlertViewHeight);
+    }];
+    
+    [self addSubview:self.centerLineImageView];
+    [self.centerLineImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(kCenterLineImageViewWidth);
+        make.height.mas_equalTo(kAlertButtonHeight);
+        make.centerX.mas_equalTo(weakSelf);
+        make.bottom.mas_equalTo(weakSelf.mas_bottom);
     }];
 }
 
@@ -349,8 +399,9 @@ static void *ClickButtonKey = @"ClickButtonKey";
                     make.width.mas_equalTo(width * 0.5f);
                     make.left.mas_equalTo(width * 0.5f);
                 }];
+                self.isHalfFontWidth = YES;
             }
- 
+            
         }
     } else if (self.count > 3) {
         if ([self.buttons count]) {
@@ -368,17 +419,44 @@ static void *ClickButtonKey = @"ClickButtonKey";
                     make.height.mas_equalTo(height + kAlertButtonHeight * (i + 1));
                 }];
             }
-        
+            
         }
         
     }
     
-    
+    [self addTopLineWithColor:RGBColor(211.0f, 210.0f, 216.0f)
+                        width:0.5f
+                   withButton:button];
 }
 
 #pragma mark - Public
 
 - (void)show {
+    CGFloat width =
+    self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
+    CGFloat height =
+    self.containerView.frame.size.height > 0 ? self.containerView.frame.size.height : kAlertViewHeight;
+    __weak typeof(self) weakSelf = self;
+    if ([self.buttons count] == 1) {
+        UIButton *anyButton = [self.buttons firstObject];
+        [anyButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.height.mas_equalTo(kAlertButtonHeight);
+            make.top.mas_equalTo(height);
+            make.width.mas_equalTo(width);
+            make.centerX.mas_equalTo(weakSelf.mas_centerX);
+        }];
+        [self mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo([weakSelf lastWindow]);
+            make.width.mas_equalTo(width);
+            make.height.mas_equalTo(height + kAlertButtonHeight);
+        }];
+    }
+    
+    if ([self.buttons count] == 2 && self.isHalfWidth && self.isHalfFontWidth) {
+        self.centerLineImageView.hidden = NO;
+        [self bringSubviewToFront:self.centerLineImageView];
+    }
+    
     [self toggleAlertView];
 }
 

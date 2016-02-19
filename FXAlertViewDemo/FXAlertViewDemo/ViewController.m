@@ -36,38 +36,35 @@
 - (void)setupViews {
     
     FXAlertView *alertView = [[FXAlertView alloc] init];
-    alertView.alertViewBackgroundColor = [UIColor purpleColor];
+    alertView.alertViewBackgroundColor = [UIColor whiteColor];
     alertView.alertViewRadius = 15.0f;
     alertView.delegate = self;
 
     //containerView
-    UIView *containerView = [[UIView alloc] init];
-    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
-    containerView.backgroundColor = [UIColor redColor];
-    alertView.containerView = containerView;
+//    UIView *containerView = [[UIView alloc] init];
+//    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
+//    alertView.containerView = containerView;
 
     //alertRadius
-    [alertView addActionWithButtonTitle:@"+++知道ehe"
-                             titleColor:[UIColor whiteColor]
+    [alertView addActionWithButtonTitle:@"知道了"
+                             titleColor:[UIColor blackColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
-                        backgroundImage:[UIImage imageNamed:@"main"]
+                        backgroundImage:nil
                         backgroundColor:nil
-                             buttonType:UIButtonTypeCustom];
+                             buttonType:UIButtonTypeSystem];
     
-    [alertView addActionWithButtonTitle:@"++OKHello"
-                        titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
-                            buttonImage:[UIImage imageNamed:@"Fill 1"]
+    [alertView addActionWithButtonTitle:@"取消了"
+                        titleEdgeInsets:UIEdgeInsetsZero
+                            buttonImage:nil
                         imageEdgeInsets:UIEdgeInsetsZero
                              titleColor:[UIColor blackColor]
-                              titleFont:[UIFont systemFontOfSize:18.0f]
-                        backgroundColor:[UIColor orangeColor]
-                             buttomType:UIButtonTypeCustom];
-    
+                              titleFont:[UIFont systemFontOfSize:16.0f]
+                        backgroundColor:[UIColor whiteColor]
+                             buttomType:UIButtonTypeSystem];
 //    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
 //                  buttonBackgroundImage:nil
 //                  buttonBackgroundColor:[UIColor whiteColor]
 //                             buttomType:UIButtonTypeCustom];
-    
     [alertView show];
     
 }
