@@ -41,20 +41,20 @@
     alertView.delegate = self;
 
     //containerView
-//    UIView *containerView = [[UIView alloc] init];
-//    containerView.frame = CGRectMake(0.0f, 0.0f, 300, 200);
-//    containerView.backgroundColor = [UIColor redColor];
-//    alertView.containerView = containerView;
+    UIView *containerView = [[UIView alloc] init];
+    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
+    containerView.backgroundColor = [UIColor redColor];
+    alertView.containerView = containerView;
 
     //alertRadius
-    [alertView addActionWithButtonTitle:@"知道了hehehe"
+    [alertView addActionWithButtonTitle:@"+++知道ehe"
                              titleColor:[UIColor whiteColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundImage:[UIImage imageNamed:@"main"]
                         backgroundColor:nil
                              buttonType:UIButtonTypeCustom];
     
-    [alertView addActionWithButtonTitle:@"OK+++Hello"
+    [alertView addActionWithButtonTitle:@"++OKHello"
                         titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
                             buttonImage:[UIImage imageNamed:@"Fill 1"]
                         imageEdgeInsets:UIEdgeInsetsZero
@@ -63,10 +63,10 @@
                         backgroundColor:[UIColor orangeColor]
                              buttomType:UIButtonTypeCustom];
     
-    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
-                  buttonBackgroundImage:nil
-                  buttonBackgroundColor:[UIColor whiteColor]
-                             buttomType:UIButtonTypeCustom];
+//    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
+//                  buttonBackgroundImage:nil
+//                  buttonBackgroundColor:[UIColor whiteColor]
+//                             buttomType:UIButtonTypeCustom];
     
     [alertView show];
     
