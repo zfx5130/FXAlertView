@@ -54,6 +54,11 @@
 @property (assign, nonatomic) BOOL isHiddenCenterLine;
 
 /**
+ *  the bool default is no, if you set yes, if you tap the maskView,the view will be dismiss.
+ */
+@property (assign, nonatomic) BOOL  canTapDismiss;
+
+/**
  *  delegate
  */
 @property (weak, nonatomic) id <FXAlertViewDelegate> delegate;
@@ -67,13 +72,15 @@
  *  @param backgroundImage backgroundImage, default is nil
  *  @param backgroundColor, default color is white
  *  @param buttonType, default is systemType
+ *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
  */
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
                       titleColor:(UIColor *)titleColor
                        titleFont:(UIFont *)titleFont
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
-                      buttonType:(UIButtonType)buttonType;
+                      buttonType:(UIButtonType)buttonType
+             buttonTopLineColor:(UIColor *)buttonTopLineColor;
 
 /**
  *  set image button
@@ -82,11 +89,13 @@
  *  @param buttonBackgroundImage button BackgroundImage
  *  @param backbackgroundColor , default color is white
  *  @param buttonType, default is systemType
+ *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
  */
 - (void)addActionWithButtonImage:(UIImage *)buttonImage
            buttonBackgroundImage:(UIImage *)buttonBackgroundImage
            buttonBackgroundColor:(UIColor *)backgroundColor
-                      buttomType:(UIButtonType)buttonType;
+                      buttomType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor;
 /**
  *
  *  @param buttonTitle     button title,default is nil.
@@ -97,6 +106,7 @@
  *  @param titleFont       titlefont, default is 16.0f
  *  @param backgroundColor backgroundColor, default is white
  *  @param buttonType, default is systemType
+ *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
  */
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
                  titleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
@@ -105,11 +115,14 @@
                       titleColor:(UIColor *)titleColor
                        titleFont:(UIFont *)titleFont
                  backgroundColor:(UIColor *)backgroundColor
-                      buttomType:(UIButtonType)buttonType;
-/**
- *  alert show
- */
-- (void)show;
+                      buttomType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor;
 
+/**
+ *  alertView show, default animated is yes
+ *
+ *  @param animated whether or not animated
+ */
+- (void)showWithAnimated:(BOOL)animated;
 
 @end

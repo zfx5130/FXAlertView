@@ -44,14 +44,17 @@
 //    UIView *containerView = [[UIView alloc] init];
 //    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
 //    alertView.containerView = containerView;
+//    alertView.canTapDismiss = YES;
 
-    //alertRadius
-    [alertView addActionWithButtonTitle:@"知道了"
-                             titleColor:[UIColor blackColor]
-                              titleFont:[UIFont systemFontOfSize:16.0f]
-                        backgroundImage:nil
-                        backgroundColor:nil
-                             buttonType:UIButtonTypeSystem];
+    
+//    [alertView addActionWithButtonTitle:@"知道了"
+//                             titleColor:[UIColor blackColor]
+//                              titleFont:[UIFont systemFontOfSize:16.0f]
+//                        backgroundImage:nil
+//                        backgroundColor:nil
+//                             buttonType:UIButtonTypeSystem
+//                     buttonTopLineColor:nil];
+
     
     [alertView addActionWithButtonTitle:@"取消了"
                         titleEdgeInsets:UIEdgeInsetsZero
@@ -60,12 +63,16 @@
                              titleColor:[UIColor blackColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundColor:[UIColor whiteColor]
-                             buttomType:UIButtonTypeSystem];
+                             buttomType:UIButtonTypeSystem
+                     buttonTopLineColor:nil];
+    
+    
 //    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
 //                  buttonBackgroundImage:nil
 //                  buttonBackgroundColor:[UIColor whiteColor]
 //                             buttomType:UIButtonTypeCustom];
-    [alertView show];
+    
+    [alertView showWithAnimated:YES];
     
 }
 

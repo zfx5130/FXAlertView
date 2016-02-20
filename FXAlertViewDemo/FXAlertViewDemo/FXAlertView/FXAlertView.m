@@ -115,6 +115,15 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     self.centerLineImageView.backgroundColor = centerLineBackgroundColor;
 }
 
+- (void)setCanTapDismiss:(BOOL)canTapDismiss {
+    _canTapDismiss = canTapDismiss;
+    UITapGestureRecognizer *tapGesture =
+    [[UITapGestureRecognizer alloc] initWithTarget:self
+                                            action:@selector(dismiss)];
+    tapGesture.delegate = self;
+    [self.maskView addGestureRecognizer:tapGesture];
+}
+
 #pragma mark - Getters
 
 - (NSMutableArray *)buttons {
@@ -215,11 +224,6 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     self.maskView.alpha = 0.0f;
     self.count = 1;
     self.maskView.backgroundColor = [self maskViewBackgroundColor];
-    UITapGestureRecognizer *tapGesture =
-    [[UITapGestureRecognizer alloc] initWithTarget:self
-                                            action:@selector(dismiss)];
-    tapGesture.delegate = self;
-    [self.maskView addGestureRecognizer:tapGesture];
     [window addSubview:self.maskView];
     [self.maskView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(window);
@@ -269,6 +273,11 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     }];
 }
 
+- (void)toggleAlertViewNotAnimated {
+    CGFloat alpha = self.maskView.alpha ? 0.0f : 1.0f;
+    self.maskView.alpha = alpha;
+}
+
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
                  titleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
                      buttonImage:(UIImage *)buttonImage
@@ -277,7 +286,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                        titleFont:(UIFont *)titleFont
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
-                      buttonType:(UIButtonType)buttonType {
+                      buttonType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor {
     
     UIButton *button = [UIButton buttonWithType:buttonType];
     [button setTitle:buttonTitle
@@ -424,14 +434,17 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
         
     }
     
-    [self addTopLineWithColor:RGBColor(211.0f, 210.0f, 216.0f)
+    if (!buttonTopLineColor) {
+        buttonTopLineColor = RGBColor(211.0f, 210.0f, 216.0f);
+    }
+    [self addTopLineWithColor:buttonTopLineColor
                         width:0.5f
                    withButton:button];
 }
 
 #pragma mark - Public
 
-- (void)show {
+- (void)showWithAnimated:(BOOL)animated {
     CGFloat width =
     self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
     CGFloat height =
@@ -456,14 +469,18 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
         self.centerLineImageView.hidden = NO;
         [self bringSubviewToFront:self.centerLineImageView];
     }
-    
-    [self toggleAlertView];
+    if (animated) {
+        [self toggleAlertView];
+    } else {
+        [self toggleAlertViewNotAnimated];
+    }
 }
 
 - (void)addActionWithButtonImage:(UIImage *)buttonImage
            buttonBackgroundImage:(UIImage *)buttonBackgroundImage
            buttonBackgroundColor:(UIColor *)backgroundColor
-                      buttomType:(UIButtonType)buttonType {
+                      buttomType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor {
     [self addActionWithButtonTitle:nil
                    titleEdgeInsets:UIEdgeInsetsZero
                        buttonImage:buttonImage
@@ -472,7 +489,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                          titleFont:nil
                    backgroundImage:buttonBackgroundImage
                    backgroundColor:backgroundColor
-                        buttonType:buttonType];
+                        buttonType:buttonType
+                buttonTopLineColor:buttonTopLineColor];
     
 }
 
@@ -483,7 +501,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                       titleColor:(UIColor *)titleColor
                        titleFont:(UIFont *)titleFont
                  backgroundColor:(UIColor *)backgroundColor
-                      buttomType:(UIButtonType)buttonType {
+                      buttomType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor {
     [self addActionWithButtonTitle:buttonTitle
                    titleEdgeInsets:titleEdgeInsets
                        buttonImage:buttonImage
@@ -492,7 +511,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                          titleFont:titleFont
                    backgroundImage:nil
                    backgroundColor:backgroundColor
-                        buttonType:buttonType];
+                        buttonType:buttonType
+                buttonTopLineColor:buttonTopLineColor];
 }
 
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
@@ -500,7 +520,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                        titleFont:(UIFont *)titleFont
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
-                      buttonType:(UIButtonType)buttonType {
+                      buttonType:(UIButtonType)buttonType
+              buttonTopLineColor:(UIColor *)buttonTopLineColor {
     [self addActionWithButtonTitle:buttonTitle
                    titleEdgeInsets:UIEdgeInsetsZero
                        buttonImage:nil
@@ -509,7 +530,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                          titleFont:titleFont
                    backgroundImage:backgroundImage
                    backgroundColor:backgroundColor
-                        buttonType:buttonType];
+                        buttonType:buttonType
+                buttonTopLineColor:buttonTopLineColor];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
