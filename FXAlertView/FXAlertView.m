@@ -20,7 +20,7 @@
 
 #import "FXAlertView.h"
 
-#import <Masonry.h>
+#import <Masonry/Masonry.h>
 #import <objc/runtime.h>
 
 static const CGFloat kAlertViewHeight = 120.0f;
