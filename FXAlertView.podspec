@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "FXAlertView"
-  s.version      = "1.0.2"
+  s.version      = "1.0.3"
   s.summary      = "自定义alertView,可以添加图片button,文字button,文字和图片结合button,中间视图可以根据需求自定义"
   s.homepage     = "https://github.com/zfx5130/FXAlertView"
   s.license      = "MIT"
