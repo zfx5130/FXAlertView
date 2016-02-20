@@ -10,8 +10,8 @@
    
 ####效果如下
 
-![](https://github.com/zfx5130/FXAlertView/tree/master/images/demo.gif)
-![](https://github.com/zfx5130/FXAlertView/tree/master/images/demo1.gif)
+![](https://github.com/zfx5130/FXAlertView/blob/master/images/demo.gif)
+![](https://github.com/zfx5130/FXAlertView/blob/master/images/demo1.gif)
 
 ##安装
 ###1.CocoaPods
