@@ -104,6 +104,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 - (void)setCenterLineImage:(UIImage *)centerLineImage {
     _centerLineImage = centerLineImage;
     self.centerLineImageView.image = centerLineImage;
+    self.centerLineImageView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setIsHiddenCenterLine:(BOOL)isHiddenCenterLine {
@@ -113,6 +114,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 
 - (void)setCenterLineBackgroundColor:(UIColor *)centerLineBackgroundColor {
     _centerLineBackgroundColor = centerLineBackgroundColor;
+    self.centerLineImageView.image = nil;
     self.centerLineImageView.backgroundColor = centerLineBackgroundColor;
 }
 
@@ -160,7 +162,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     if (!_centerLineImageView) {
         _centerLineImageView = [[UIImageView alloc] init];
         _centerLineImageView.backgroundColor = RGBColor(211.0f, 210.0f, 216.0f);
-        _centerLineImageView.contentMode = UIViewContentModeScaleAspectFit;
+        _centerLineImageView.contentMode = UIViewContentModeScaleAspectFill;
         _centerLineImageView.hidden = YES;
     }
     return _centerLineImageView;
@@ -219,6 +221,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     
     self.layer.cornerRadius = [self alertViewRadius];
     self.clipsToBounds = YES;
+    self.isHiddenCenterLine = YES;
     self.backgroundColor = [self alertViewBackgroundColor];
     UIWindow *window = [self lastWindow];
     self.maskView = [[UIView alloc] init];
@@ -477,7 +480,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
         make.bottom.mas_equalTo(weakSelf.mas_bottom);
     }];
     
-    if ([self.buttons count] == 2 && self.isHalfWidth && self.isHalfFontWidth) {
+    if ([self.buttons count] == 2 && self.isHalfWidth && self.isHalfFontWidth && !self.isHiddenCenterLine) {
         self.centerLineImageView.hidden = NO;
         [self bringSubviewToFront:self.centerLineImageView];
     }

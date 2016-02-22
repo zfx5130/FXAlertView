@@ -63,6 +63,7 @@
  */
 @property (weak, nonatomic) id <FXAlertViewDelegate> delegate;
 
+
 /**
  *  set title button
  *
@@ -73,6 +74,7 @@
  *  @param backgroundColor, default color is white
  *  @param buttonType, default is systemType
  *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
+ *  @param buttonHeight, if you set height is 0.0f, default height is 40.0f
  */
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
                       titleColor:(UIColor *)titleColor
@@ -80,7 +82,8 @@
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
                       buttonType:(UIButtonType)buttonType
-             buttonTopLineColor:(UIColor *)buttonTopLineColor;
+             buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight;
 
 /**
  *  set image button
@@ -90,12 +93,14 @@
  *  @param backbackgroundColor , default color is white
  *  @param buttonType, default is systemType
  *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
+ *  @param buttonHeight, if you set height is 0.0f, default height is 40.0f
  */
 - (void)addActionWithButtonImage:(UIImage *)buttonImage
            buttonBackgroundImage:(UIImage *)buttonBackgroundImage
            buttonBackgroundColor:(UIColor *)backgroundColor
                       buttomType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor;
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight;
 /**
  *
  *  @param buttonTitle     button title,default is nil.
@@ -107,6 +112,7 @@
  *  @param backgroundColor backgroundColor, default is white
  *  @param buttonType, default is systemType
  *  @param buttonTopLineColor, if you set nil, default is RGBColor(211.0f, 210.0f, 216.0f)
+ *  @param buttonHeight, if you set height is 0.0f, default height is 40.0f
  */
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
                  titleEdgeInsets:(UIEdgeInsets)titleEdgeInsets
@@ -116,7 +122,8 @@
                        titleFont:(UIFont *)titleFont
                  backgroundColor:(UIColor *)backgroundColor
                       buttomType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor;
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight;
 
 /**
  *  alertView show, default animated is yes

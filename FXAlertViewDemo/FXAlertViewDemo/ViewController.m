@@ -37,7 +37,7 @@
     
     FXAlertView *alertView = [[FXAlertView alloc] init];
     alertView.alertViewBackgroundColor = [UIColor whiteColor];
-//    alertView.alertViewRadius = 15.0f;
+//   alertView.alertViewRadius = 15.0f;
     alertView.delegate = self;
 
     //containerView
@@ -46,6 +46,8 @@
 //    alertView.containerView = containerView;
 //    alertView.canTapDismiss = YES;
 
+    alertView.centerLineImage = [UIImage imageNamed:@"login_button_dashed_line_image"];
+    alertView.isHiddenCenterLine = NO;
     
     [alertView addActionWithButtonTitle:@"知道了"
                              titleColor:[UIColor blackColor]
@@ -56,6 +58,7 @@
                      buttonTopLineColor:nil
                            buttonHeight:50.0f];
 
+    
     
     [alertView addActionWithButtonTitle:@"取消了"
                         titleEdgeInsets:UIEdgeInsetsZero
@@ -68,12 +71,6 @@
                      buttonTopLineColor:nil
                            buttonHeight:50.0f];
     
-    
-//    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
-//                  buttonBackgroundImage:nil
-//                  buttonBackgroundColor:[UIColor whiteColor]
-//                             buttomType:UIButtonTypeCustom];
-    
     [alertView showWithAnimated:YES];
     
 }
@@ -83,28 +80,6 @@
 - (IBAction)showButtonWasPressed:(UIButton *)sender {
     [self setupViews];
 }
-
-//- (IBAction)alertButtonWasPressed:(UIButton *)sender {
-//    UIAlertController *alertController =
-//    [UIAlertController alertControllerWithTitle:@"hello"
-//                                         message:@"你好"
-//                                  preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *cancleAlertAction = [UIAlertAction actionWithTitle:@"取消"
-//                                                          style:UIAlertActionStyleCancel
-//                                                        handler:^(UIAlertAction * _Nonnull action) {
-//                                                            NSLog(@"取消操作");
-//    }];
-//    UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:@"OKad"
-//                                                            style:UIAlertActionStyleDestructive
-//                                                          handler:^(UIAlertAction * _Nonnull action) {
-//                                                              NSLog(@"dooooooooooooook");
-//    }];
-//    [alertController addAction:cancleAlertAction];
-//    [alertController addAction:okAlertAction];
-//     [self presentViewController:alertController
-//                        animated:YES
-//                      completion:nil];
-//}
 
 #pragma mark - FXAlertViewDelegate
 

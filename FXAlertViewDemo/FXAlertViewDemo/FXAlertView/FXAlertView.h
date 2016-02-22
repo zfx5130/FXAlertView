@@ -63,6 +63,7 @@
  */
 @property (weak, nonatomic) id <FXAlertViewDelegate> delegate;
 
+
 /**
  *  set title button
  *
