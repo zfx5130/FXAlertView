@@ -114,6 +114,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 
 - (void)setCenterLineBackgroundColor:(UIColor *)centerLineBackgroundColor {
     _centerLineBackgroundColor = centerLineBackgroundColor;
+    self.centerLineImageView.image = nil;
     self.centerLineImageView.backgroundColor = centerLineBackgroundColor;
 }
 
