@@ -40,6 +40,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 @property (assign, nonatomic) BOOL isHalfWidth;
 @property (assign, nonatomic) BOOL isHalfFontWidth;
 @property (strong, nonatomic) UIImageView *centerLineImageView;
+@property (assign, nonatomic) CGFloat buttonHeight;
 
 @end
 
@@ -287,7 +288,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
                       buttonType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor {
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight {
     
     UIButton *button = [UIButton buttonWithType:buttonType];
     [button setTitle:buttonTitle
@@ -320,6 +322,9 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
     CGFloat height =
     self.containerView.frame.size.height > 0 ? self.containerView.frame.size.height : kAlertViewHeight;
+    
+    CGFloat btHeight = buttonHeight > 0 ? buttonHeight : kAlertButtonHeight;
+    self.buttonHeight = btHeight;
     [button addTarget:self
                action:@selector(buttonClick:)
      forControlEvents:UIControlEventTouchUpInside];
@@ -345,16 +350,16 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                                    text:buttonTitle];
         if (size.width > width * 0.5f) {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(kAlertButtonHeight);
-                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.height.mas_equalTo(btHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * btHeight);
                 make.width.mas_equalTo(width);
                 make.centerX.mas_equalTo(weakSelf.mas_centerX);
             }];
             self.isHalfWidth = NO;
         } else {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(kAlertButtonHeight);
-                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.height.mas_equalTo(btHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * btHeight);
                 make.width.mas_equalTo(width * 0.5f);
                 make.left.mas_equalTo(weakSelf.mas_left);
             }];
@@ -363,49 +368,49 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
         [self mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo([weakSelf lastWindow]);
             make.width.mas_equalTo(width);
-            make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+            make.height.mas_equalTo(height + btHeight * (self.count - 1));
         }];
     } else if (self.count == 3) {
         if (!self.isHalfWidth) {
             [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.height.mas_equalTo(kAlertButtonHeight);
-                make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                make.height.mas_equalTo(btHeight);
+                make.top.mas_equalTo(height + (self.count - 2) * btHeight);
                 make.width.mas_equalTo(width);
                 make.centerX.mas_equalTo(weakSelf.mas_centerX);
             }];
             [self mas_remakeConstraints:^(MASConstraintMaker *make) {
                 make.center.equalTo([weakSelf lastWindow]);
                 make.width.mas_equalTo(width);
-                make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+                make.height.mas_equalTo(height + btHeight * (self.count - 1));
             }];
         } else if (self.isHalfWidth) {
             CGSize size = [self sizeForFont:titleFont
                                        text:buttonTitle];
             if (size.width > width * 0.5f) {
                 [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(kAlertButtonHeight);
-                    make.top.mas_equalTo(height + (self.count - 2) * kAlertButtonHeight);
+                    make.height.mas_equalTo(btHeight);
+                    make.top.mas_equalTo(height + (self.count - 2) * btHeight);
                     make.width.mas_equalTo(width);
                     make.centerX.mas_equalTo(weakSelf.mas_centerX);
                 }];
                 [self mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.center.equalTo([weakSelf lastWindow]);
                     make.width.mas_equalTo(width);
-                    make.height.mas_equalTo(height + kAlertButtonHeight * (self.count - 1));
+                    make.height.mas_equalTo(height + btHeight * (self.count - 1));
                 }];
                 if ([self.buttons count] >= 2) {
                     UIButton *button = [self.buttons firstObject];
                     [button mas_remakeConstraints:^(MASConstraintMaker *make) {
-                        make.height.mas_equalTo(kAlertButtonHeight);
-                        make.top.mas_equalTo(height + (self.count - 3) * kAlertButtonHeight);
+                        make.height.mas_equalTo(btHeight);
+                        make.top.mas_equalTo(height + (self.count - 3) * btHeight);
                         make.width.mas_equalTo(width);
                         make.centerX.mas_equalTo(weakSelf.mas_centerX);
                     }];
                 }
             } else {
                 [button mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(kAlertButtonHeight);
-                    make.top.mas_equalTo(height + (self.count - 3) * kAlertButtonHeight);
+                    make.height.mas_equalTo(btHeight);
+                    make.top.mas_equalTo(height + (self.count - 3) * btHeight);
                     make.width.mas_equalTo(width * 0.5f);
                     make.left.mas_equalTo(width * 0.5f);
                 }];
@@ -418,15 +423,15 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
             for (int i = 0; i < [self.buttons count]; i++) {
                 UIButton *anyButton = self.buttons[i];
                 [anyButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-                    make.height.mas_equalTo(kAlertButtonHeight);
-                    make.top.mas_equalTo(height + i * kAlertButtonHeight);
+                    make.height.mas_equalTo(btHeight);
+                    make.top.mas_equalTo(height + i * btHeight);
                     make.width.mas_equalTo(width);
                     make.centerX.mas_equalTo(weakSelf.mas_centerX);
                 }];
                 [self mas_remakeConstraints:^(MASConstraintMaker *make) {
                     make.center.equalTo([weakSelf lastWindow]);
                     make.width.mas_equalTo(width);
-                    make.height.mas_equalTo(height + kAlertButtonHeight * (i + 1));
+                    make.height.mas_equalTo(height + btHeight * (i + 1));
                 }];
             }
             
@@ -449,11 +454,12 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
     self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
     CGFloat height =
     self.containerView.frame.size.height > 0 ? self.containerView.frame.size.height : kAlertViewHeight;
+    
     __weak typeof(self) weakSelf = self;
     if ([self.buttons count] == 1) {
         UIButton *anyButton = [self.buttons firstObject];
         [anyButton mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.height.mas_equalTo(kAlertButtonHeight);
+            make.height.mas_equalTo(self.buttonHeight);
             make.top.mas_equalTo(height);
             make.width.mas_equalTo(width);
             make.centerX.mas_equalTo(weakSelf.mas_centerX);
@@ -461,9 +467,15 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
         [self mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo([weakSelf lastWindow]);
             make.width.mas_equalTo(width);
-            make.height.mas_equalTo(height + kAlertButtonHeight);
+            make.height.mas_equalTo(height + self.buttonHeight);
         }];
     }
+    [self.centerLineImageView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.width.mas_equalTo(kCenterLineImageViewWidth);
+        make.height.mas_equalTo(self.buttonHeight);
+        make.centerX.mas_equalTo(weakSelf);
+        make.bottom.mas_equalTo(weakSelf.mas_bottom);
+    }];
     
     if ([self.buttons count] == 2 && self.isHalfWidth && self.isHalfFontWidth) {
         self.centerLineImageView.hidden = NO;
@@ -480,7 +492,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
            buttonBackgroundImage:(UIImage *)buttonBackgroundImage
            buttonBackgroundColor:(UIColor *)backgroundColor
                       buttomType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor {
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight {
     [self addActionWithButtonTitle:nil
                    titleEdgeInsets:UIEdgeInsetsZero
                        buttonImage:buttonImage
@@ -490,7 +503,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                    backgroundImage:buttonBackgroundImage
                    backgroundColor:backgroundColor
                         buttonType:buttonType
-                buttonTopLineColor:buttonTopLineColor];
+                buttonTopLineColor:buttonTopLineColor
+                      buttonHeight:buttonHeight];
     
 }
 
@@ -502,7 +516,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                        titleFont:(UIFont *)titleFont
                  backgroundColor:(UIColor *)backgroundColor
                       buttomType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor {
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight {
     [self addActionWithButtonTitle:buttonTitle
                    titleEdgeInsets:titleEdgeInsets
                        buttonImage:buttonImage
@@ -512,7 +527,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                    backgroundImage:nil
                    backgroundColor:backgroundColor
                         buttonType:buttonType
-                buttonTopLineColor:buttonTopLineColor];
+                buttonTopLineColor:buttonTopLineColor
+                      buttonHeight:buttonHeight];
 }
 
 - (void)addActionWithButtonTitle:(NSString *)buttonTitle
@@ -521,7 +537,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                  backgroundImage:(UIImage *)backgroundImage
                  backgroundColor:(UIColor *)backgroundColor
                       buttonType:(UIButtonType)buttonType
-              buttonTopLineColor:(UIColor *)buttonTopLineColor {
+              buttonTopLineColor:(UIColor *)buttonTopLineColor
+                    buttonHeight:(CGFloat)buttonHeight {
     [self addActionWithButtonTitle:buttonTitle
                    titleEdgeInsets:UIEdgeInsetsZero
                        buttonImage:nil
@@ -531,7 +548,8 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
                    backgroundImage:backgroundImage
                    backgroundColor:backgroundColor
                         buttonType:buttonType
-                buttonTopLineColor:buttonTopLineColor];
+                buttonTopLineColor:buttonTopLineColor
+                      buttonHeight:buttonHeight];
 }
 
 #pragma mark - UIGestureRecognizerDelegate

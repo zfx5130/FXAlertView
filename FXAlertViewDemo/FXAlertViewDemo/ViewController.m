@@ -37,7 +37,7 @@
     
     FXAlertView *alertView = [[FXAlertView alloc] init];
     alertView.alertViewBackgroundColor = [UIColor whiteColor];
-    alertView.alertViewRadius = 15.0f;
+//    alertView.alertViewRadius = 15.0f;
     alertView.delegate = self;
 
     //containerView
@@ -47,13 +47,14 @@
 //    alertView.canTapDismiss = YES;
 
     
-//    [alertView addActionWithButtonTitle:@"知道了"
-//                             titleColor:[UIColor blackColor]
-//                              titleFont:[UIFont systemFontOfSize:16.0f]
-//                        backgroundImage:nil
-//                        backgroundColor:nil
-//                             buttonType:UIButtonTypeSystem
-//                     buttonTopLineColor:nil];
+    [alertView addActionWithButtonTitle:@"知道了"
+                             titleColor:[UIColor blackColor]
+                              titleFont:[UIFont systemFontOfSize:16.0f]
+                        backgroundImage:nil
+                        backgroundColor:nil
+                             buttonType:UIButtonTypeSystem
+                     buttonTopLineColor:nil
+                           buttonHeight:50.0f];
 
     
     [alertView addActionWithButtonTitle:@"取消了"
@@ -64,7 +65,8 @@
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundColor:[UIColor whiteColor]
                              buttomType:UIButtonTypeSystem
-                     buttonTopLineColor:nil];
+                     buttonTopLineColor:nil
+                           buttonHeight:50.0f];
     
     
 //    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
