@@ -46,7 +46,7 @@
 //    alertView.containerView = containerView;
 //    alertView.canTapDismiss = YES;
 
-    alertView.centerLineImage = [UIImage imageNamed:@"login_button_dashed_line_image"];
+    alertView.centerLineImage = [UIImage imageNamed:@"alert_line_image"];
     alertView.isHiddenCenterLine = NO;
     
     [alertView addActionWithButtonTitle:@"知道了"
