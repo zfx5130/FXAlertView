@@ -208,13 +208,7 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 }
 
 - (UIWindow *)lastWindow {
-    NSArray *windows = [UIApplication sharedApplication].windows;
-    for(UIWindow *window in [windows reverseObjectEnumerator]) {
-        if ([window isKindOfClass:[UIWindow class]] &&
-            CGRectEqualToRect(window.bounds, [UIScreen mainScreen].bounds))
-            return window;
-    }
-    return [UIApplication sharedApplication].keyWindow;
+    return  [[[UIApplication sharedApplication] windows] firstObject];
 }
 
 - (void)setupAlertView {

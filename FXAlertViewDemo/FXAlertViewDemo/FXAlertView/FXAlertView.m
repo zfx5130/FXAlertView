@@ -273,7 +273,6 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 
 - (void)toggleAlertViewNotAnimated {
     CGFloat alpha = self.maskView.alpha ? 0.0f : 1.0f;
-    NSLog(@":::::::%@", @(alpha));
     self.maskView.alpha = alpha;
 }
 
@@ -448,7 +447,6 @@ static const CGFloat kCenterLineImageViewWidth = 0.5f;
 #pragma mark - Public
 
 - (void)showWithAnimated:(BOOL)animated {
-    NSLog(@"____)))))))))((0000000000000");
     CGFloat width =
     self.containerView.frame.size.width > 0 ? self.containerView.frame.size.width : kAlertViewWidth;
     CGFloat height =
