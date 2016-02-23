@@ -48,7 +48,6 @@
 
     alertView.centerLineImage = [UIImage imageNamed:@"alert_line_image"];
     alertView.isHiddenCenterLine = NO;
-    
     [alertView addActionWithButtonTitle:@"知道了"
                              titleColor:[UIColor blackColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
@@ -71,13 +70,14 @@
                      buttonTopLineColor:nil
                            buttonHeight:50.0f];
     
-    [alertView showWithAnimated:YES];
+    [alertView showWithAnimated:NO];
     
 }
 
 #pragma mark - Handlers
 
 - (IBAction)showButtonWasPressed:(UIButton *)sender {
+    [self.view endEditing:YES];
     [self setupViews];
 }
 
