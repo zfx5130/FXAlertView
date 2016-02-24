@@ -37,16 +37,20 @@
     
     FXAlertView *alertView = [[FXAlertView alloc] init];
     alertView.alertViewBackgroundColor = [UIColor whiteColor];
-//   alertView.alertViewRadius = 15.0f;
+    alertView.alertViewRadius = 15.0f;
     alertView.delegate = self;
 
     //containerView
-//    UIView *containerView = [[UIView alloc] init];
-//    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
-//    alertView.containerView = containerView;
-//    alertView.canTapDismiss = YES;
+    UIView *containerView = [[UIView alloc] init];
+    containerView.frame = CGRectMake(0.0f, 0.0f, 268, 200);
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"image"]];
+    imageView.frame = containerView.bounds;
+    imageView.contentMode = UIViewContentModeScaleToFill;
+    [containerView addSubview:imageView];
+    alertView.containerView = containerView;
+    alertView.canTapDismiss = YES;
 
-    alertView.centerLineImage = [UIImage imageNamed:@"alert_line_image"];
+   // alertView.centerLineImage = [UIImage imageNamed:@"alert_line_image"];
     alertView.isHiddenCenterLine = NO;
     [alertView addActionWithButtonTitle:@"知道了"
                              titleColor:[UIColor blackColor]
@@ -60,13 +64,20 @@
     
     
     [alertView addActionWithButtonTitle:@"取消了"
-                        titleEdgeInsets:UIEdgeInsetsZero
-                            buttonImage:nil
+                        titleEdgeInsets:UIEdgeInsetsMake(0.0f, 10.0f, 0.0f, 0.0f)
+                            buttonImage:[UIImage imageNamed:@"Fill 1"]
                         imageEdgeInsets:UIEdgeInsetsZero
-                             titleColor:[UIColor blackColor]
+                             titleColor:[UIColor redColor]
                               titleFont:[UIFont systemFontOfSize:16.0f]
                         backgroundColor:[UIColor whiteColor]
                              buttomType:UIButtonTypeSystem
+                     buttonTopLineColor:nil
+                           buttonHeight:50.0f];
+    
+    [alertView addActionWithButtonImage:[UIImage imageNamed:@"device_list_C1"]
+                  buttonBackgroundImage:nil
+                  buttonBackgroundColor:nil
+                             buttomType:UIButtonTypeCustom
                      buttonTopLineColor:nil
                            buttonHeight:50.0f];
     
